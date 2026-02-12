@@ -1,0 +1,184 @@
+## Test File 5: Comments Testing
+## This file thoroughly tests single-line and multi-line comments
+
+## Single-line comment at the start
+## Another comment
+## And one more
+
+start
+    ## Comment before code
+    declare Value = 100  ## Comment after code
+    
+    ## Multiple single-line comments in a row
+    ## Comment line 1
+    ## Comment line 2
+    ## Comment line 3
+    ## Comment line 4
+    
+    declare Another_value = 200
+    
+    #* 
+       This is a simple multi-line comment
+       It spans multiple lines
+       And should be completely ignored by the scanner
+    *#
+    
+    declare Result = Value + Another_value
+    
+    #*
+    Multi-line comment with different content:
+    - Lists
+    - Special characters: !@#$%^&*()
+    - Numbers: 123456789
+    - Code-like text: declare X = 100
+    *#
+    
+    ## Comment before condition
+    condition (Value > 0)  ## Comment after condition
+        ## Comment inside block
+        output "Value is positive"  ## Another inline comment
+    finish  ## Comment after finish
+    
+    #* Compact multi-line comment *#
+    
+    declare Counter = 0
+    
+    #*
+    This is a longer multi-line comment that demonstrates
+    how our scanner handles comments with various content.
+    
+    It can contain:
+    - Empty lines
+    
+    - Code that should not be executed:
+      declare Fake_var = 999
+      output "This should not print"
+    
+    - Keywords: start finish loop condition
+    - Operators: + - * / == != && ||
+    - Special characters: @#$%^&*()
+    
+    All of this should be completely ignored!
+    *#
+    
+    loop (Counter < 5)
+        ## Loop body comment
+        Counter++
+        #* Inline multi-line in loop *#
+        output Counter
+    finish
+    
+    ## Testing comments with edge cases
+    
+    #* Comment with asterisk * inside *#
+    #* Comment with multiple * * * asterisks *#
+    #* Comment with hash # inside *#
+    #* Comment with *# sequence mentioned but not ending: *# fake *#
+    
+    ## Single-line comment with ## inside it ##
+    ## Comment with special chars: !@#$%^&*()_+-=[]{}|;:'",.<>?/\
+    
+    declare Text = "This is not a comment: ##"  ## But this is!
+    declare More_text = "Not a comment: #* *#"   ## This is a comment
+    
+    #*
+       Comment explaining the next section
+       ===================================
+       We're going to test some complex expressions
+    *#
+    
+    declare Complex = (Value * 2) + (Another_value / 2) - (Counter ** 2)
+    
+    function Test_function(Param_1, Param_2)
+        ## Function comment
+        #*
+           This function demonstrates that comments work
+           inside function bodies as well
+        *#
+        declare Local_var = Param_1 + Param_2
+        return Local_var  ## Return value
+    finish
+    
+    ## Comment before function call
+    declare Func_result = Test_function(10, 20)  ## Comment after call
+    
+    #* 
+    ========================================
+    Section: Array Operations
+    ========================================
+    Testing comments in array sections
+    *#
+    
+    declare Numbers[10]  ## Declare array
+    Numbers[0] = 100     ## First element
+    Numbers[1] = 200     ## Second element
+    ## Numbers[2] = 300  ## Commented out assignment
+    
+    #*
+    TODO: Add more array operations
+    FIXME: Array bounds checking needed
+    NOTE: This is just for demonstration
+    *#
+    
+    ## Testing comment density
+    ##
+    ## Multiple empty comment lines
+    ##
+    ##
+    
+    #**#  ## Empty multi-line comment
+    #*   *#  ## Multi-line with just spaces
+    #*
+    *#  ## Multi-line with just newline
+    
+    declare Almost_done = true
+    
+    ## Comment at different indentation levels
+        ## Indented comment 1
+            ## Indented comment 2
+                ## Indented comment 3
+    
+    #*
+        Indented multi-line comment
+            with different levels
+                of indentation
+    *#
+    
+    condition (Almost_done)
+        ## Comment in condition
+        #* Multi-line in condition *#
+        output "Test complete!"
+        
+        condition (true)
+            ## Nested condition comment
+            #* Nested multi-line *#
+            output "Nested block"
+        finish
+    finish
+    
+    ## Very long single-line comment that goes on and on and on to test if the scanner can handle really long comments without any issues whatsoever regardless of how much text is in them
+    
+    #*
+    Very long multi-line comment that also goes on and on
+    with multiple lines of text to ensure that our scanner
+    can properly handle long comments that span many lines
+    without running into any buffer or memory issues.
+    
+    This comment contains multiple paragraphs and continues
+    for quite a while to thoroughly test the comment handling
+    capabilities of our lexical analyzer implementation.
+    *#
+    
+    ## Final comment before end
+finish  ## End of program
+
+## Comments after main program block
+## These should also be properly handled
+## Even at the very end of the file
+
+#*
+Final multi-line comment at the end
+This is the last comment in the file
+*#
+
+## Truly the last line

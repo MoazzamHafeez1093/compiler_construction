@@ -1,0 +1,245 @@
+================================================================================
+TEST RESULTS - EXPECTED OUTPUTS
+================================================================================
+
+This file contains the expected output patterns for each test file.
+Actual outputs may vary slightly in exact token counts but should follow
+these general patterns.
+
+================================================================================
+TEST 1: test1.lang - All Valid Tokens
+================================================================================
+
+Expected Behavior:
+- Should successfully scan all token types
+- No errors should be reported
+- All keywords, identifiers, literals, and operators recognized
+
+Sample Output Pattern:
+---
+TOKENS:
+<KEYWORD, "start", Line: X, Col: Y>
+<KEYWORD, "function", Line: X, Col: Y>
+<IDENTIFIER, "Calculate_area", Line: X, Col: Y>
+... (many more tokens)
+
+STATISTICS:
+Total tokens: ~200-250
+Keywords: ~40-50
+Identifiers: ~30-40
+Integer literals: ~15-20
+Float literals: ~3-5
+String literals: ~5-10
+Operators: ~50-60
+Comments removed: ~10-15
+
+SYMBOL TABLE:
+Should contain: Calculate_area, Length, Width, Area, Pi, Result_flag, Count,
+                Sum, Average, Message, New_char, X, Y, Z, etc.
+
+ERRORS:
+✓ No lexical errors found!
+---
+
+
+================================================================================
+TEST 2: test2.lang - Complex Expressions
+================================================================================
+
+Expected Behavior:
+- Handles nested conditions and loops
+- Processes complex arithmetic expressions
+- Recognizes scientific notation
+- Handles maximum length identifier (31 chars)
+
+Sample Output Pattern:
+---
+TOKENS:
+Complex nested structures properly tokenized
+Scientific notation (1.5e10, 2.5e-3) recognized as FLOAT_LITERAL
+Identifier "This_is_maximum_length_var" (31 chars) accepted
+
+STATISTICS:
+Total tokens: ~400-500
+Higher complexity than test1
+More nested structures
+
+SYMBOL TABLE:
+Should contain: Fibonacci_calculator, Number_limit, Fib_a, Fib_b,
+                Quadratic_solver, Coefficient_a, Age, Income, etc.
+
+ERRORS:
+✓ No lexical errors found!
+---
+
+
+================================================================================
+TEST 3: test3.lang - Strings and Escapes
+================================================================================
+
+Expected Behavior:
+- All escape sequences properly recognized
+- String literals with tabs, newlines, quotes handled correctly
+- Character literals with escapes recognized
+
+Sample Output Pattern:
+---
+TOKENS:
+<STRING_LITERAL, "\"He said, \"Hello there!\"\"", Line: X, Col: Y>
+<STRING_LITERAL, "\"C:\\Program Files\\MyApp\\data.txt\"", Line: X, Col: Y>
+<STRING_LITERAL, "\"First line\nSecond line\nThird line\"", Line: X, Col: Y>
+<CHAR_LITERAL, "'\n'", Line: X, Col: Y>
+<CHAR_LITERAL, "'\t'", Line: X, Col: Y>
+<CHAR_LITERAL, "'\\'", Line: X, Col: Y>
+
+STATISTICS:
+Total tokens: ~300-350
+String literals: ~40-50
+Character literals: ~15-20
+
+SYMBOL TABLE:
+Should contain: Simple_string, Quote_example, Backslash_path, Multi_line_1,
+                Tabbed_data, Char_a, Char_newline, etc.
+
+ERRORS:
+✓ No lexical errors found!
+---
+
+
+================================================================================
+TEST 4: test4.lang - Lexical Errors
+================================================================================
+
+Expected Behavior:
+- Multiple errors detected and reported
+- Scanner continues after each error (error recovery)
+- All errors collected and displayed at end
+
+Sample Error Messages:
+---
+ERROR REPORT:
+Total errors found: 20-30
+
+1. ERROR [INVALID_CHARACTER] at Line: X, Col: Y - Lexeme: '@' - Character '@' is not recognized
+2. ERROR [INVALID_CHARACTER] at Line: X, Col: Y - Lexeme: '$' - Character '$' is not recognized
+3. ERROR [INVALID_IDENTIFIER] at Line: X, Col: Y - Lexeme: 'count' - Should start with uppercase
+4. ERROR [INVALID_IDENTIFIER] at Line: X, Col: Y - Lexeme: '2Count' - Cannot start with digit
+5. ERROR [INVALID_IDENTIFIER] at Line: X, Col: Y - Lexeme: 'This_is_a_very_long...' - Exceeds max length
+6. ERROR [MALFORMED_NUMBER] at Line: X, Col: Y - Lexeme: '3.14.159' - Multiple decimal points
+7. ERROR [MALFORMED_NUMBER] at Line: X, Col: Y - Lexeme: '5.' - Missing fractional part
+8. ERROR [MALFORMED_NUMBER] at Line: X, Col: Y - Lexeme: '3.1415926535' - Too many decimal digits
+9. ERROR [MALFORMED_NUMBER] at Line: X, Col: Y - Lexeme: '1.5e' - Missing exponent digits
+10. ERROR [UNTERMINATED_STRING] at Line: X, Col: Y - Lexeme: '"This string never ends'
+11. ERROR [UNTERMINATED_CHAR] at Line: X, Col: Y - Lexeme: ''A' - Character literal not closed
+12. ERROR [INVALID_ESCAPE] at Line: X, Col: Y - Lexeme: '\x' - Invalid escape sequence
+13. ERROR [UNCLOSED_COMMENT] at Line: X, Col: Y - Multi-line comment not closed with *#
+... (more errors)
+
+TOKENS:
+Valid tokens between errors are still recognized
+Scanner continues and produces partial token list
+
+SYMBOL TABLE:
+Contains valid identifiers that were properly recognized
+---
+
+
+================================================================================
+TEST 5: test5.lang - Comments
+================================================================================
+
+Expected Behavior:
+- All comments removed from token stream
+- Comment statistics tracked
+- Code between comments properly tokenized
+
+Sample Output Pattern:
+---
+TOKENS:
+No SINGLE_LINE_COMMENT or MULTI_LINE_COMMENT tokens in output
+(comments are tracked but not included in token list)
+All code tokens between comments recognized
+
+STATISTICS:
+Total tokens: ~80-100 (excluding comments)
+Comments removed: ~40-50 (both single and multi-line)
+Lines processed: ~200+ (many are comments)
+
+Comment Statistics:
+Single-line comments: ~30-35
+Multi-line comments: ~10-15
+
+SYMBOL TABLE:
+Should contain: Value, Another_value, Result, Counter, Text, More_text,
+                Test_function, Param_1, Param_2, Local_var, etc.
+
+ERRORS:
+✓ No lexical errors found!
+(unless there's an intentional unclosed comment for testing)
+---
+
+
+================================================================================
+GENERAL TESTING GUIDELINES
+================================================================================
+
+1. Compilation:
+   All .java files should compile without errors
+   
+2. Execution:
+   java ManualScanner <test-file> should run without crashing
+   
+3. Output Format:
+   - Tokens section with proper formatting
+   - Statistics section with counts
+   - Symbol table with proper columns
+   - Error report (if errors exist)
+   
+4. Error Handling:
+   - Errors should not crash the scanner
+   - Multiple errors in same file should all be reported
+   - Valid tokens after errors should still be recognized
+   
+5. Edge Cases Covered:
+   - Minimum and maximum identifier lengths
+   - All valid escape sequences
+   - Scientific notation in both positive and negative exponents
+   - Nested structures (loops in loops, conditions in conditions)
+   - Comments in various positions
+   - Multi-character vs single-character operators
+
+================================================================================
+PERFORMANCE EXPECTATIONS
+================================================================================
+
+File Size         | Expected Time | Token Count
+------------------|---------------|-------------
+< 100 lines       | < 0.1 seconds | 50-300 tokens
+100-500 lines     | < 0.5 seconds | 300-1500 tokens
+500-1000 lines    | < 1.0 seconds | 1500-3000 tokens
+
+Memory Usage: Should remain under 100MB for files up to 1000 lines
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+
+For Each Test File:
+☐ Scanner runs without crashing
+☐ All tokens are properly categorized
+☐ Line and column numbers are accurate
+☐ Symbol table contains all identifiers
+☐ Errors (if any) are properly reported
+☐ Statistics match expected ranges
+☐ Output is well-formatted and readable
+
+Overall:
+☐ All 5 test files run successfully
+☐ Code compiles on multiple machines
+☐ README instructions are accurate
+☐ Documentation is complete
+☐ Code is well-commented and readable
+
+================================================================================
+END OF TEST RESULTS
+================================================================================

@@ -1,0 +1,140 @@
+## Test File 3: String and Character Literals with Escapes
+## Tests all valid escape sequences and edge cases
+
+start
+    ## Basic strings
+    declare Simple_string = "Hello, World!"
+    declare Empty_string = ""
+    declare Single_word = "Programming"
+    
+    ## Strings with escape sequences
+    declare Quote_example = "He said, \"Hello there!\""
+    declare Double_quotes = "\"Quoted text\""
+    declare Backslash_path = "C:\\Program Files\\MyApp\\data.txt"
+    declare Network_path = "\\\\server\\share\\folder"
+    
+    ## Newline escapes
+    declare Multi_line_1 = "First line\nSecond line\nThird line"
+    declare Poem = "Roses are red\nViolets are blue\nCompilers are fun\nAnd so are you"
+    
+    ## Tab escapes
+    declare Tabbed_data = "Name:\tJohn\tAge:\t25"
+    declare Csv_like = "Header1\tHeader2\tHeader3\nValue1\tValue2\tValue3"
+    declare Indented = "\tIndented once\n\t\tIndented twice"
+    
+    ## Carriage return escapes
+    declare With_return = "Line with\rcarriage return"
+    declare Mixed_escapes = "Mixed:\t\n\r\\"
+    
+    ## Complex combinations
+    declare Complex_1 = "Path: \"C:\\Users\\Name\\Documents\"\n\tSize: 1024 bytes"
+    declare Complex_2 = "Say \"Hi\"\tPress \\Enter\\\nDone!"
+    declare Json_like = "{\"name\": \"Value\", \"count\": 42}"
+    
+    ## Character literals - basic
+    declare Char_a = 'A'
+    declare Char_z = 'z'
+    declare Char_0 = '0'
+    declare Char_9 = '9'
+    declare Char_space = ' '
+    
+    ## Character escapes
+    declare Char_newline = '\n'
+    declare Char_tab = '\t'
+    declare Char_return = '\r'
+    declare Char_backslash = '\\'
+    declare Char_quote = '\''
+    
+    ## Special characters in strings
+    declare Punctuation = "Hello! How are you? I'm fine."
+    declare Math_symbols = "2 + 2 = 4, 5 * 3 = 15"
+    declare Brackets = "Arrays: [1, 2, 3], Objects: {key: value}"
+    declare Mixed_case = "UPPERCASE and lowercase MiXeD"
+    
+    ## Numbers in strings
+    declare With_numbers = "Year 2026, Month 02, Day 11"
+    declare Phone_number = "Contact: +1-555-0123"
+    declare Equation = "Formula: E = mc^2"
+    
+    ## Unicode-like (ASCII printable)
+    declare Symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?"
+    declare Alphanumeric = "abc123XYZ789"
+    
+    ## Long strings
+    declare Long_text = "This is a longer string that contains multiple words and demonstrates that our scanner can handle strings of various lengths without any issues whatsoever."
+    
+    ## Strings with only spaces and tabs
+    declare Spaces = "     "
+    declare Tabs = "\t\t\t"
+    declare Mixed_whitespace = " \t \t "
+    
+    ## Escape at different positions
+    declare Escape_start = "\nStarts with newline"
+    declare Escape_middle = "Middle\nhas\nnewlines"
+    declare Escape_end = "Ends with newline\n"
+    
+    ## Multiple consecutive escapes
+    declare Multi_escape_1 = "\n\n\n"
+    declare Multi_escape_2 = "\t\t\t\t"
+    declare Multi_escape_3 = "\\\\\\\\"
+    declare Multi_escape_4 = "\"\"\"\""
+    
+    ## Real-world examples
+    declare Html_tag = "<div class=\"container\">\n\t<p>Hello</p>\n</div>"
+    declare Sql_query = "SELECT * FROM users WHERE name = \"John\""
+    declare File_content = "Line 1\nLine 2\nLine 3\n"
+    declare Error_message = "Error: File not found at \"C:\\temp\\data.txt\""
+    
+    ## Edge cases
+    declare Just_escape = "\n"
+    declare Just_tab = "\t"
+    declare Just_quote = "\""
+    declare Just_backslash = "\\"
+    
+    ## Concatenation simulation (multiple strings)
+    output "Part 1 "
+    output "Part 2 "
+    output "Part 3"
+    
+    ## Character operations
+    declare First_letter = 'F'
+    declare Last_letter = 'L'
+    
+    condition (First_letter == 'F')
+        output "Character comparison works"
+    finish
+    
+    ## Array of characters
+    declare Alphabet[26]
+    Alphabet[0] = 'A'
+    Alphabet[25] = 'Z'
+    
+    ## String assignment in conditions
+    condition (true)
+        declare Temp_string = "Conditional\tString\nWith\rescapes"
+        output Temp_string
+    finish
+    
+    ## Loop with string output
+    declare Counter = 0
+    loop (Counter < 3)
+        output "Iteration: ", Counter, "\n"
+        Counter++
+    finish
+    
+    ## Function with string parameters
+    function Print_formatted(Header, Value, Footer)
+        output Header
+        output "\t"
+        output Value
+        output "\n"
+        output Footer
+    finish
+    
+    ## Test all escape sequences in one string
+    declare All_escapes = "Quote:\" Backslash:\\ Newline:\n Tab:\t Return:\r End"
+    
+    output "String and character testing complete!\n"
+finish
+
+## End of string/char test file

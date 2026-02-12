@@ -1,0 +1,97 @@
+## Test File 1: All Valid Token Types
+## This file demonstrates every type of token our scanner recognizes
+
+start function Calculate_area(Length, Width)
+    declare Area = 0
+    declare Pi = 3.14159
+    declare Result_flag = true
+    
+    ## Check if dimensions are positive
+    condition (Length > 0 && Width > 0)
+        Area = Length * Width
+        output "Area calculated successfully"
+    else
+        output "Invalid dimensions"
+        Result_flag = false
+    finish
+    
+    return Area
+finish
+
+## Main program starts here
+start
+    declare Count = 0
+    declare Sum = 0
+    declare Average = 0.0
+    declare Message = "Welcome to our language!"
+    declare New_char = 'A'
+    
+    ## Loop demonstration
+    loop (Count < 10)
+        Count++
+        Sum += Count
+        condition (Count == 5)
+            break
+        finish
+    finish
+    
+    ## Arithmetic operations
+    declare X = 100
+    declare Y = -50
+    declare Z = +25
+    
+    X = X ** 2  ## Exponentiation
+    Y = X / 2
+    Z = X % 3
+    
+    ## Relational operators
+    condition (X >= Y)
+        output "X is greater than or equal to Y"
+    finish
+    
+    condition (X != Z)
+        output "X is not equal to Z"
+    finish
+    
+    ## Logical operators
+    condition (true || false)
+        output "Logical OR works"
+    finish
+    
+    condition (true && !false)
+        output "Logical AND and NOT work"
+    finish
+    
+    ## Assignment operators
+    X += 10
+    Y -= 5
+    Z *= 2
+    Average /= 2.0
+    
+    ## Increment and decrement
+    Count++
+    Count--
+    
+    ## Array/bracket demonstration
+    declare Numbers[10]
+    Numbers[0] = 42
+    
+    ## Function call
+    declare Area_result = Calculate_area(5, 10)
+    
+    ## Input/output
+    input Temp_value
+    output "The result is: ", Area_result
+    
+    ## More complex expressions
+    declare Complex_calc = (X + Y) * Z - (Area_result / 2)
+    
+    ## Character and string escapes
+    declare Quote_str = "She said \"Hello\""
+    declare Path_str = "C:\\Users\\Name"
+    declare Newline_str = "Line1\nLine2\tTabbed"
+    declare Escaped_char = '\''
+    
+finish
+
+## End of test file

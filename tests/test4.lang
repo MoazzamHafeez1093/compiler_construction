@@ -1,0 +1,111 @@
+## Test File 4: Lexical Errors
+## This file intentionally contains various lexical errors for testing error handling
+
+start
+    ## ERROR: Invalid characters
+    declare Value@ = 100         ## @ is not valid
+    declare Price$ = 50.99        ## $ is not valid
+    declare Result# = true        ## # alone (not ##) is not valid outside comments
+    
+    ## ERROR: Invalid identifier - starts with lowercase
+    declare count = 0             ## Should start with uppercase
+    declare myVariable = 10       ## Should start with uppercase
+    declare value = 5             ## Should start with uppercase
+    
+    ## ERROR: Invalid identifier - starts with digit
+    declare 2Count = 0            ## Cannot start with digit
+    declare 99Bottles = 0         ## Cannot start with digit
+    
+    ## ERROR: Identifier too long (more than 31 characters)
+    declare This_is_a_very_long_identifier_name_exceeding_limit = 100
+    
+    ## ERROR: Malformed numbers - multiple decimal points
+    declare Bad_float_1 = 3.14.159     ## Two decimal points
+    declare Bad_float_2 = 1.2.3.4      ## Multiple decimals
+    
+    ## ERROR: Decimal point without digits
+    declare No_fractional = 5.         ## Missing fractional part
+    declare No_integer = .5            ## Missing integer part (this will be caught as invalid char)
+    
+    ## ERROR: Too many decimal digits (more than 6)
+    declare Too_precise = 3.1415926535  ## More than 6 decimal places
+    declare Very_precise = 1.23456789   ## Too many decimals
+    
+    ## ERROR: Invalid exponent
+    declare Bad_exp_1 = 1.5e           ## Missing exponent digits
+    declare Bad_exp_2 = 2.0E+          ## Missing exponent digits after sign
+    
+    ## ERROR: Unterminated string
+    declare Unclosed_str = "This string never ends
+    
+    ## Valid line to continue after error
+    declare Good_value = 42
+    
+    ## ERROR: Unterminated string on same line as other code
+    declare Another_error = "Unclosed  declare X = 10
+    
+    ## ERROR: Unterminated character literal
+    declare Bad_char_1 = 'A
+    declare Bad_char_2 = '
+    
+    ## ERROR: Invalid escape sequences
+    declare Bad_escape_1 = "Invalid \x escape"      ## \x is not valid
+    declare Bad_escape_2 = "Another \b one"         ## \b is not valid
+    declare Bad_escape_3 = "Wrong \z here"          ## \z is not valid
+    declare Bad_char_escape = '\q'                  ## \q is not valid
+    
+    ## ERROR: Newline in string literal
+    declare Multiline_error = "This is
+    not allowed"
+    
+    ## ERROR: Multiple characters in char literal (without escape)
+    declare Too_many_chars = 'ABC'
+    
+    ## ERROR: Unclosed multi-line comment
+    #* This comment starts
+       but it never finishes properly
+       The *# is missing at the end
+    
+    declare After_comment = 100
+    
+    ## ERROR: Invalid operators (not in our language)
+    declare Wrong_op_1 = 10 & 5        ## Single & is not valid
+    declare Wrong_op_2 = 10 | 5        ## Single | is not valid  
+    declare Wrong_op_3 = 10 ^ 5        ## ^ is not valid
+    declare Wrong_op_4 = ~10           ## ~ is not valid
+    
+    ## ERROR: Mixed valid and invalid
+    declare Mixed_1 = Good_value @ 10  ## @ in expression
+    declare Mixed_2 = 50 $ 25          ## $ in expression
+    
+    ## Valid code mixed with errors
+    declare Valid_1 = 100
+    declare Valid_2 = 200
+    declare Valid_sum = Valid_1 + Valid_2
+    
+    ## ERROR: Identifier with invalid characters
+    declare Invalid_name! = 10         ## ! in identifier
+    declare Another-bad = 20           ## - in identifier
+    declare Bad.name = 30              ## . in identifier
+    
+    ## ERROR: String with unescaped quotes
+    declare Tricky = "She said "Hi" to me"  ## Quotes not escaped
+    
+    ## More errors for comprehensive testing
+    declare Percent% = 50              ## % in identifier
+    declare At@sign = 100              ## @ in identifier
+    declare Hash#tag = 200             ## # in identifier
+    
+    ## ERROR: Empty character literal
+    declare Empty_char = ''
+    
+    ## Some valid tokens to show recovery
+    output "Testing error recovery"
+    condition (Valid_1 > 0)
+        output "Scanner continues after errors"
+    finish
+    
+finish
+
+## This file should generate multiple errors but scanner should continue
+## and find all of them, not stop at the first error

@@ -1,0 +1,164 @@
+## Test File 2: Complex Expressions
+## Demonstrates nested structures, complex calculations, and edge cases
+
+start function Fibonacci_calculator(Number_limit)
+    declare Fib_a = 0
+    declare Fib_b = 1
+    declare Fib_temp = 0
+    declare Counter = 0
+    
+    output "Fibonacci sequence:"
+    
+    loop (Counter < Number_limit)
+        output Fib_a
+        Fib_temp = Fib_a + Fib_b
+        Fib_a = Fib_b
+        Fib_b = Fib_temp
+        Counter++
+    finish
+    
+    return Fib_b
+finish
+
+start function Quadratic_solver(Coefficient_a, Coefficient_b, Coefficient_c)
+    #* 
+       This function solves quadratic equations using the quadratic formula
+       ax^2 + bx + c = 0
+       Formula: x = (-b ± sqrt(b^2 - 4ac)) / 2a
+    *#
+    
+    declare Discriminant = (Coefficient_b ** 2) - (4 * Coefficient_a * Coefficient_c)
+    declare Root_1 = 0.0
+    declare Root_2 = 0.0
+    declare Has_real_roots = false
+    
+    condition (Discriminant >= 0)
+        Has_real_roots = true
+        declare Sqrt_discriminant = Discriminant ** 0.5
+        Root_1 = (-Coefficient_b + Sqrt_discriminant) / (2 * Coefficient_a)
+        Root_2 = (-Coefficient_b - Sqrt_discriminant) / (2 * Coefficient_a)
+        output "Root 1: ", Root_1
+        output "Root 2: ", Root_2
+    else
+        output "No real roots exist"
+    finish
+    
+    return Has_real_roots
+finish
+
+## Main execution
+start
+    ## Test complex nested conditions
+    declare Age = 25
+    declare Income = 50000
+    declare Credit_score = 720
+    declare Approved = false
+    
+    condition (Age >= 18)
+        condition (Income > 30000)
+            condition (Credit_score >= 650)
+                Approved = true
+                output "Loan approved!"
+            else
+                condition (Credit_score >= 600 && Income > 45000)
+                    Approved = true
+                    output "Conditionally approved"
+                else
+                    output "Insufficient credit score"
+                finish
+            finish
+        else
+            output "Insufficient income"
+        finish
+    else
+        output "Must be 18 or older"
+    finish
+    
+    ## Complex arithmetic expressions
+    declare Value_1 = 100
+    declare Value_2 = 50
+    declare Value_3 = 25
+    declare Value_4 = 10
+    
+    declare Complex_result = ((Value_1 + Value_2) * Value_3 - Value_4 ** 2) / (Value_2 - Value_4)
+    declare Another_calc = (Value_1 ** 2 + Value_2 ** 2) ** 0.5  ## Pythagorean theorem
+    
+    ## Chained comparisons and logical operations
+    condition ((Value_1 > Value_2) && (Value_2 > Value_3) && (Value_3 > Value_4))
+        output "Values are in descending order"
+    finish
+    
+    condition ((Value_1 >= 100) || (Value_2 <= 0) || (Value_3 == Value_4))
+        output "At least one condition is true"
+    finish
+    
+    condition (!(Value_1 < Value_2) && !(Value_3 > Value_4))
+        output "Complex negation works"
+    finish
+    
+    ## Loop with multiple counters
+    declare Outer_loop = 0
+    declare Inner_loop = 0
+    declare Total_iterations = 0
+    
+    loop (Outer_loop < 5)
+        Inner_loop = 0
+        loop (Inner_loop < 5)
+            Total_iterations++
+            Inner_loop++
+            
+            condition (Inner_loop == 3)
+                continue
+            finish
+            
+            condition (Total_iterations > 20)
+                break
+            finish
+        finish
+        Outer_loop++
+    finish
+    
+    ## Scientific notation and edge case numbers
+    declare Large_number = 1.5e10
+    declare Small_number = 2.5e-3
+    declare Precise_value = 3.141592
+    declare Zero_val = 0
+    declare Negative_val = -999
+    declare Positive_val = +123
+    
+    ## String manipulations (conceptual)
+    declare Full_name = "John Smith"
+    declare First_char = 'J'
+    declare Last_char = 'h'
+    
+    ## Array operations with complex indexing
+    declare Matrix[100]
+    declare Row_index = 0
+    declare Col_index = 0
+    
+    loop (Row_index < 10)
+        Col_index = 0
+        loop (Col_index < 10)
+            Matrix[Row_index * 10 + Col_index] = Row_index + Col_index
+            Col_index++
+        finish
+        Row_index++
+    finish
+    
+    ## Call functions with expressions as arguments
+    declare Fib_result = Fibonacci_calculator(Value_3 - Value_4)
+    declare Quad_result = Quadratic_solver(1, -5, 6)
+    
+    ## Multiple assignment operators in sequence
+    Value_1 += 10
+    Value_1 *= 2
+    Value_1 -= 5
+    Value_1 /= 3
+    
+    ## Edge case: maximum identifier length (exactly 31 chars)
+    declare This_is_maximum_length_var = 999
+    
+    output "All complex tests completed successfully!"
+finish
+
+## End of complex test file
