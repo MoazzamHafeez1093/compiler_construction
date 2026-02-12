@@ -1,0 +1,376 @@
+================================================================================
+SIMPLELANG - FORMAL LANGUAGE GRAMMAR SPECIFICATION
+================================================================================
+File Extension: .lang
+Version: 1.0
+Date: February 11, 2026
+
+================================================================================
+1. LEXICAL GRAMMAR (TOKEN DEFINITIONS)
+================================================================================
+
+1.1 KEYWORDS (Terminal Symbols)
+---------------------------------
+KEYWORD ::= "start" | "finish" | "loop" | "condition" | "declare" | 
+            "output" | "input" | "function" | "return" | "break" | 
+            "continue" | "else"
+
+Note: Keywords are case-sensitive and must match exactly.
+
+
+1.2 IDENTIFIERS
+---------------------------------
+IDENTIFIER ::= UPPERCASE (LOWERCASE | DIGIT | "_")*
+
+where:
+    UPPERCASE ::= [A-Z]
+    LOWERCASE ::= [a-z]
+    DIGIT ::= [0-9]
+
+Constraints:
+    - Must start with an uppercase letter
+    - Maximum length: 31 characters
+    - Cannot be a keyword
+
+
+1.3 LITERALS
+---------------------------------
+
+INTEGER_LITERAL ::= SIGN? DIGIT+
+    where SIGN ::= "+" | "-"
+
+FLOAT_LITERAL ::= SIGN? DIGIT+ "." DIGIT{1,6} EXPONENT?
+    where EXPONENT ::= ("e" | "E") SIGN? DIGIT+
+
+STRING_LITERAL ::= '"' STRING_CHAR* '"'
+    where STRING_CHAR ::= <any character except ", \, newline> | ESCAPE_SEQ
+          ESCAPE_SEQ ::= '\"' | '\\' | '\n' | '\t' | '\r'
+
+CHAR_LITERAL ::= "'" CHAR_CONTENT "'"
+    where CHAR_CONTENT ::= <any character except ', \, newline> | ESCAPE_SEQ
+
+BOOLEAN_LITERAL ::= "true" | "false"
+
+
+1.4 OPERATORS
+---------------------------------
+
+ARITHMETIC_OP ::= "**" | "+" | "-" | "*" | "/" | "%"
+
+RELATIONAL_OP ::= "==" | "!=" | "<=" | ">=" | "<" | ">"
+
+LOGICAL_OP ::= "&&" | "||" | "!"
+
+ASSIGNMENT_OP ::= "=" | "+=" | "-=" | "*=" | "/="
+
+INCREMENT_OP ::= "++"
+
+DECREMENT_OP ::= "--"
+
+
+1.5 PUNCTUATORS
+---------------------------------
+PUNCTUATOR ::= "(" | ")" | "{" | "}" | "[" | "]" | "," | ";" | ":"
+
+
+1.6 COMMENTS
+---------------------------------
+SINGLE_LINE_COMMENT ::= "##" <any character except newline>* NEWLINE?
+
+MULTI_LINE_COMMENT ::= "#*" <any character sequence>* "*#"
+
+
+1.7 WHITESPACE
+---------------------------------
+WHITESPACE ::= SPACE | TAB | NEWLINE | CARRIAGE_RETURN
+    where:
+        SPACE ::= ' '
+        TAB ::= '\t'
+        NEWLINE ::= '\n'
+        CARRIAGE_RETURN ::= '\r'
+
+
+================================================================================
+2. SYNTACTIC GRAMMAR (PHRASE STRUCTURE)
+================================================================================
+
+2.1 PROGRAM STRUCTURE
+---------------------------------
+Program ::= FunctionDeclaration* MainBlock
+
+MainBlock ::= "start" StatementList "finish"
+
+FunctionDeclaration ::= "start" "function" IDENTIFIER "(" ParameterList? ")" 
+                        StatementList 
+                        "finish"
+
+ParameterList ::= IDENTIFIER ("," IDENTIFIER)*
+
+
+2.2 STATEMENTS
+---------------------------------
+StatementList ::= Statement*
+
+Statement ::= DeclarationStmt
+            | AssignmentStmt
+            | InputStmt
+            | OutputStmt
+            | ConditionalStmt
+            | LoopStmt
+            | FunctionCallStmt
+            | ReturnStmt
+            | BreakStmt
+            | ContinueStmt
+
+DeclarationStmt ::= "declare" IDENTIFIER ("[" INTEGER_LITERAL "]")? 
+                    ("=" Expression)?
+
+AssignmentStmt ::= IDENTIFIER ("[" Expression "]")? 
+                   (ASSIGNMENT_OP | INCREMENT_OP | DECREMENT_OP) Expression?
+
+InputStmt ::= "input" IDENTIFIER
+
+OutputStmt ::= "output" Expression ("," Expression)*
+
+ConditionalStmt ::= "condition" "(" Expression ")" 
+                    StatementList 
+                    ("else" StatementList)? 
+                    "finish"
+
+LoopStmt ::= "loop" "(" Expression ")" 
+             StatementList 
+             "finish"
+
+FunctionCallStmt ::= IDENTIFIER "(" ArgumentList? ")"
+
+ReturnStmt ::= "return" Expression?
+
+BreakStmt ::= "break"
+
+ContinueStmt ::= "continue"
+
+ArgumentList ::= Expression ("," Expression)*
+
+
+2.3 EXPRESSIONS
+---------------------------------
+Expression ::= LogicalOrExpr
+
+LogicalOrExpr ::= LogicalAndExpr ("||" LogicalAndExpr)*
+
+LogicalAndExpr ::= EqualityExpr ("&&" EqualityExpr)*
+
+EqualityExpr ::= RelationalExpr (("==" | "!=") RelationalExpr)*
+
+RelationalExpr ::= AdditiveExpr (("<" | ">" | "<=" | ">=") AdditiveExpr)*
+
+AdditiveExpr ::= MultiplicativeExpr (("+" | "-") MultiplicativeExpr)*
+
+MultiplicativeExpr ::= ExponentialExpr (("*" | "/" | "%") ExponentialExpr)*
+
+ExponentialExpr ::= UnaryExpr ("**" UnaryExpr)*
+
+UnaryExpr ::= ("!" | "+" | "-")? PrimaryExpr
+
+PrimaryExpr ::= IDENTIFIER ("[" Expression "]")?
+              | INTEGER_LITERAL
+              | FLOAT_LITERAL
+              | STRING_LITERAL
+              | CHAR_LITERAL
+              | BOOLEAN_LITERAL
+              | FunctionCall
+              | "(" Expression ")"
+
+FunctionCall ::= IDENTIFIER "(" ArgumentList? ")"
+
+
+================================================================================
+3. SEMANTIC RULES
+================================================================================
+
+3.1 SCOPE RULES
+---------------------------------
+- Variables must be declared before use
+- Function parameters are local to the function
+- Variables declared in a block are local to that block
+
+
+3.2 TYPE RULES
+---------------------------------
+- Arithmetic operations require numeric operands
+- Relational operations can compare numeric or boolean values
+- Logical operations require boolean operands
+- Array indices must be integers
+- String and character types are distinct
+
+
+3.3 CONTROL FLOW
+---------------------------------
+- "break" can only appear inside loops
+- "continue" can only appear inside loops
+- "return" can only appear inside functions
+- All functions must return a value if declared with return type
+
+
+================================================================================
+4. OPERATOR PRECEDENCE AND ASSOCIATIVITY
+================================================================================
+
+Priority Level | Operators        | Associativity | Description
+---------------|------------------|---------------|--------------------
+1 (Highest)    | **               | Right         | Exponentiation
+2              | !, +, - (unary)  | Right         | Unary operators
+3              | *, /, %          | Left          | Multiplicative
+4              | +, - (binary)    | Left          | Additive
+5              | <, >, <=, >=     | Left          | Relational
+6              | ==, !=           | Left          | Equality
+7              | &&               | Left          | Logical AND
+8              | ||               | Left          | Logical OR
+9 (Lowest)     | =, +=, -=, *=, /=| Right         | Assignment
+
+
+================================================================================
+5. PATTERN MATCHING PRIORITY (FOR LEXICAL ANALYSIS)
+================================================================================
+
+The scanner must check tokens in this order to avoid ambiguity:
+
+1. Multi-line comments (#* ... *#)
+2. Single-line comments (##)
+3. Multi-character operators (**, ==, !=, <=, >=, &&, ||, ++, --, +=, -=, *=, /=)
+4. Keywords
+5. Boolean literals (true, false)
+6. Identifiers
+7. Floating-point literals
+8. Integer literals
+9. String literals
+10. Character literals
+11. Single-character operators
+12. Punctuators
+13. Whitespace
+
+
+================================================================================
+6. ERROR DETECTION RULES
+================================================================================
+
+6.1 LEXICAL ERRORS
+---------------------------------
+- Invalid characters not in the alphabet
+- Unterminated string or character literals
+- Invalid escape sequences
+- Malformed numeric literals
+- Identifiers exceeding 31 characters
+- Identifiers starting with invalid characters
+- Unclosed multi-line comments
+
+
+6.2 SYNTACTIC ERRORS
+---------------------------------
+- Missing required keywords (start, finish)
+- Unmatched parentheses, braces, or brackets
+- Invalid statement sequences
+- Missing semicolons (if required in future versions)
+
+
+6.3 SEMANTIC ERRORS
+---------------------------------
+- Use of undeclared variables
+- Type mismatches in expressions
+- Invalid array access
+- Break/continue outside loops
+- Return outside functions
+
+
+================================================================================
+7. RESERVED WORDS
+================================================================================
+
+The following identifiers are reserved and cannot be used as variable names:
+
+start, finish, loop, condition, declare, output, input, function, return,
+break, continue, else, true, false
+
+
+================================================================================
+8. SAMPLE VALID PROGRAMS
+================================================================================
+
+8.1 Minimal Program
+---------------------------------
+start
+finish
+
+
+8.2 Simple Variable Declaration
+---------------------------------
+start
+    declare X = 10
+finish
+
+
+8.3 Complete Program with Function
+---------------------------------
+start function Add(A, B)
+    declare Result = A + B
+    return Result
+finish
+
+start
+    declare Sum = Add(5, 10)
+    output Sum
+finish
+
+
+================================================================================
+9. IMPLEMENTATION NOTES
+================================================================================
+
+9.1 Longest Match Principle
+---------------------------------
+When multiple patterns match at the current position, always choose the
+longest match. For example:
+- "**" is recognized as EXPONENTIATION, not two MULTIPLICATION operators
+- "==" is recognized as EQUALS, not two ASSIGNMENT operators
+
+
+9.2 Case Sensitivity
+---------------------------------
+- Keywords are case-sensitive: "start" is valid, "Start" is not
+- Identifiers are case-sensitive: "Count" and "count" are different
+  (though "count" would be invalid due to starting with lowercase)
+
+
+9.3 Whitespace Handling
+---------------------------------
+- Whitespace is generally ignored except:
+  * Inside string literals (preserved)
+  * For separating tokens (e.g., between keywords and identifiers)
+- Line endings are significant for single-line comments
+
+
+9.4 Comment Nesting
+---------------------------------
+- Single-line comments cannot be nested (only one ## per line is recognized)
+- Multi-line comments in base implementation do NOT nest
+- Nested comments are a potential bonus feature
+
+
+================================================================================
+10. FUTURE EXTENSIONS (Not Implemented in Assignment 01)
+================================================================================
+
+- Type declarations (int, float, string, bool)
+- Multi-dimensional arrays
+- String concatenation operator
+- Bitwise operators
+- Switch-case statements
+- For loops with initialization
+- Struct/class definitions
+- Import/module system
+- File I/O operations
+
+
+================================================================================
+END OF GRAMMAR SPECIFICATION
+================================================================================
