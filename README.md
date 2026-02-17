@@ -140,7 +140,8 @@ run_all_tests.bat      # Windows
 
 | Name | Roll Number | Section |
 |------|-------------|---------|
-| [Your Name] | [Your Roll No] | [Your Section] |
+| Moazzam Hafeez | 22i-1093 | A |
+| Fiza Jameel | 22i-0964 | A |
 
 ---
 
